@@ -13,7 +13,9 @@
 	- Setup from command line:
 		
 		`Labs/Lab-01-20230922> gradle wrapper`
+
 		`Labs/Lab-01-20230922> ./gradlew build`
+
 		`Labs/Lab-01-20230922> ./gradlew run`
 		
 		

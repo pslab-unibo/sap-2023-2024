@@ -32,13 +32,13 @@ java {
     }
 }
 
-/* 
+
 application {
     // Define the main class for the application.
-    mainClass.set("lab.App")
+    mainClass.set("mvc_01_basic.AppMain")
 }
 
- 
+/*  
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()

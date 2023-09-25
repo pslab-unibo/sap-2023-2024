@@ -3,7 +3,7 @@ package mvc_01_basic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyModel implements ModelInterface, ModelObserverSource {
+public class MyModel implements ModelObserverSource {
 
 	private List<ModelObserver> observers;
 	private int state;

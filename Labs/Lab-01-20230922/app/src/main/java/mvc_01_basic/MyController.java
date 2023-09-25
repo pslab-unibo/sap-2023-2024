@@ -3,9 +3,9 @@ package mvc_01_basic;
 
 public class MyController implements UserInputObserver {
 	
-	private MyModel model;
+	private ModelInterface model;
 
-	public MyController(MyModel model){
+	public MyController(ModelInterface model){
 		this.model = model;
 	}
 	

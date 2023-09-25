@@ -1,4 +1,4 @@
-package mvc_02_conc;
+package mvc_03_conc;
 
 public interface ModelObserver {
 

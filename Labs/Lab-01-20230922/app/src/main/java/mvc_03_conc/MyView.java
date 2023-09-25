@@ -1,4 +1,4 @@
-package mvc_02_conc;
+package mvc_03_conc;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
@@ -11,10 +11,10 @@ import javax.swing.SwingUtilities;
 
 class MyView implements ModelObserver {
 
-	private MyModel model;
+	private ModelObserverSource model;
 	private MyFrame frame;
 	
-	public MyView(MyModel model) {		
+	public MyView(ModelObserverSource model) {		
 		this.model = model;		
 	    model.addObserver(this);	    
 	    frame = new MyFrame(model.getState());

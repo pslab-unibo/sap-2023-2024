@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-class MyInputUI implements UserInputSource {
+public class MyInputUI implements UserInputSource {
 
 	private List<UserInputObserver> observers;
 

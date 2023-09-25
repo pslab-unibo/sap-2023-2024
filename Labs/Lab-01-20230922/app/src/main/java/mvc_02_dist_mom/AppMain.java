@@ -1,4 +1,6 @@
-package mvc_02_conc;
+package mvc_02_dist_mom;
+
+import mvc_01_basic.*;
 
 public class AppMain {
   static public void main(String[] args) throws Exception {
@@ -8,10 +10,11 @@ public class AppMain {
     MyInputUI inputUI = new MyInputUI();
 	MyController controller = new MyController(model);
 	inputUI.addObserver(controller);
-	MyAutonomousController autController = new MyAutonomousController(model);
-	autController.start();
 	view.display();
 	inputUI.display();
-  }
+
+	MyRemoteViewStub view3 = new MyRemoteViewStub(model);
+	
+  }	
   
 }

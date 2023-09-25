@@ -1,4 +1,4 @@
-package mvc_02_conc;
+package mvc_03_conc;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

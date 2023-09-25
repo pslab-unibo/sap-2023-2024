@@ -1,4 +1,6 @@
-package mvc_01_basic;
+package mvc_02_dist_rmi;
+
+import mvc_01_basic.*;
 
 public class AppMain {
   static public void main(String[] args) throws Exception {
@@ -10,6 +12,9 @@ public class AppMain {
 	inputUI.addObserver(controller);
 	view.display();
 	inputUI.display();
+
+	MyRemoteViewProxy view3 = new MyRemoteViewProxy(model);
+	
   }	
   
 }

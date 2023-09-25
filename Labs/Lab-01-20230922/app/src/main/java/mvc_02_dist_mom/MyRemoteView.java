@@ -1,4 +1,4 @@
-package mvc_01_basic;
+package mvc_02_dist_mom;
 
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
@@ -8,20 +8,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-public class MyView implements ModelObserver {
+class MyRemoteView implements RemoteModelObserver {
 
-	private ModelObserverSource model;
 	private MyFrame frame;
 	
-	public MyView(ModelObserverSource model) {		
-		this.model = model;		
-	    model.addObserver(this);	    
-	    frame = new MyFrame(model.getState());
+	public MyRemoteView() {		
+	    frame = new MyFrame();
 	}
 
-	public void notifyModelUpdated() {
+	public void notifyModelUpdated(int state) {
 		log("model updated => updating the view");
-		frame.updateView(model.getState());
+		frame.updateView(state);
 	}
 		
 	public void display() {
@@ -38,14 +35,15 @@ public class MyView implements ModelObserver {
 
 		private JTextField state;
 
-		public MyFrame(int initState) {
-			super("My View");
+		public MyFrame() {
+			super("My Remote View");
 			
 			setSize(300, 70);
 			setResizable(false);
 			
 			state = new JTextField(10);
-			state.setText("" + initState);
+			state.setText("");
+			state.setEditable(false);
 
 			JPanel panel = new JPanel();
 			panel.add(state);

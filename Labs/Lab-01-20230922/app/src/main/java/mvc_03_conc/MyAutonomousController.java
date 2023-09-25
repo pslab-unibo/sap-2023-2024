@@ -1,11 +1,11 @@
-package mvc_02_conc;
+package mvc_03_conc;
 
 
 public class MyAutonomousController extends Thread {
 	
-	private MyModel model;
+	private ModelInterface model;
 
-	public MyAutonomousController(MyModel model){
+	public MyAutonomousController(ModelInterface model){
 		this.model = model;
 	}
 	

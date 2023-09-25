@@ -4,4 +4,6 @@ public interface ModelInterface {
 
 	void update();
 
+	int getState();
+
 }

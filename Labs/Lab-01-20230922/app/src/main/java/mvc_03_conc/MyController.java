@@ -1,11 +1,11 @@
-package mvc_02_conc;
+package mvc_03_conc;
 
 
 public class MyController implements UserInputObserver {
 	
-	private MyModel model;
+	private ModelInterface model;
 
-	public MyController(MyModel model){
+	public MyController(ModelInterface model){
 		this.model = model;
 	}
 	

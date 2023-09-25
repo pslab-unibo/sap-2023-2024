@@ -7,8 +7,7 @@ import mvc_01_basic.*;
 
 class MyRemoteViewStub implements ModelObserver {
 
-	private final static String QUEUE_NAME = "mvc";
-	private final static String NO_EXCHANGE_USED = "";
+	private final static String EXCHANGE_NAME = "mvc";
 	private Channel channel;
 	private Connection connection;
 	private ConnectionFactory factory;
@@ -21,27 +20,22 @@ class MyRemoteViewStub implements ModelObserver {
 	    try {
 			factory = new ConnectionFactory();
 		    factory.setHost("localhost");
-		    System.out.println("Remote View Stub installing...");
 		    connection = factory.newConnection();		    
 		    channel = connection.createChannel();
-		    channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+		    channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 		    System.out.println("Remote View Stub installed.");
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 	}
 
 	public void notifyModelUpdated() {
 		try {		    
 		    String message = "" + model.getState();	  
-		    channel.basicPublish(NO_EXCHANGE_USED, QUEUE_NAME, null, message.getBytes("UTF-8"));  
+	        channel.basicPublish(EXCHANGE_NAME, "", null, message.getBytes("UTF-8"));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-	
-	
 	}
 		
 	

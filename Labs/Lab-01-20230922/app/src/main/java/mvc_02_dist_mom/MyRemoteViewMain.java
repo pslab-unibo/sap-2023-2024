@@ -4,28 +4,29 @@ import com.rabbitmq.client.*;
 
 public class MyRemoteViewMain {
 
-	  private final static String QUEUE_NAME = "mvc";
+	private final static String EXCHANGE_NAME = "mvc";
 
-	  public static void main(String[] argv) throws Exception {
-	    
+	public static void main(String[] argv) throws Exception {
+
 		MyRemoteView view = new MyRemoteView();
 		view.display();
 
-		  
 		ConnectionFactory factory = new ConnectionFactory();
-	    factory.setHost("localhost");
-	    Connection connection = factory.newConnection();
-	    
-	    Channel channel = connection.createChannel();
+		factory.setHost("localhost");
+		Connection connection = factory.newConnection();
 
-	    channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+		Channel channel = connection.createChannel();
+		channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
+	    String queueName = channel.queueDeclare().getQueue();
+	    channel.queueBind(queueName, EXCHANGE_NAME, "");
 
-	    DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-	        String message = new String(delivery.getBody(), "UTF-8");
-	        view.notifyModelUpdated(Integer.parseInt(message));
-	    };
-	    String consumerTag = channel.basicConsume(QUEUE_NAME, true, deliverCallback, /* cancellation callback */ consTag -> { });
+
+		DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+			String message = new String(delivery.getBody(), "UTF-8");
+			view.notifyModelUpdated(Integer.parseInt(message));
+		};
 	    
-	    System.out.println("Remote Viewer installed. ");
-	  }
+		channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });	    
+		System.out.println("Remote Viewer installed. ");
+	}
 }

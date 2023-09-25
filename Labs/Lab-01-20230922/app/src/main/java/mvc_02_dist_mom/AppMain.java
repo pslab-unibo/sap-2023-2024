@@ -13,7 +13,7 @@ public class AppMain {
 	view.display();
 	inputUI.display();
 
-	MyRemoteViewStub view3 = new MyRemoteViewStub(model);
+	new MyRemoteViewStub(model);
 	
   }	
   

@@ -13,7 +13,7 @@ public class AppMain {
 	view.display();
 	inputUI.display();
 
-	MyRemoteViewProxy view3 = new MyRemoteViewProxy(model);
+	new MyRemoteViewProxy(model);
 	
   }	
   

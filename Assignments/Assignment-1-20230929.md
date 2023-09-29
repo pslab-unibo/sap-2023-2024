@@ -8,7 +8,7 @@
 
 	- Represent a C&C view of the system based on UML components diagrams. 
 
-- **Deliverable**:  a zipped folder ``Assignment-01-<Surname>`` including a gradle project, including sources and a doc (a PDF) including the C&C view. The deliverable can be submitted using a link on the course web site.
+- **Deliverable**:  a zipped folder ``Assignment-01-<Surname>`` including a gradle project, with sources and a doc (a PDF) including the C&C view. The deliverable can be submitted using a link on the course web site.
 
 
 - **Deadline:** October 13, 2023

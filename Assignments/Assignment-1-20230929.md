@@ -1,4 +1,4 @@
-####Software Architecture and Platforms - a.y. 2023-2024
+#### Software Architecture and Platforms - a.y. 2023-2024
  
 # Assignment #1 - 20230929 - About MVC and C&C  
 

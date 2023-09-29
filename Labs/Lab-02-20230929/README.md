@@ -18,7 +18,7 @@
 	- **[Technology Radar](https://www.thoughtworks.com/radar)** by /thoughtworks  
 - Activity
 	- [About assignments](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment-desc.md) 
-	- [**Assignment #01**](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment%20#1%20-%2020230929.md)
+	- [**Assignment #01**](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment #1 - 20230929.md)
 
  
 	

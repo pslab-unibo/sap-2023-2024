@@ -16,7 +16,8 @@
 - Tool/Platform of the day
 	- [ArchiMate](https://www.archimatetool.com/) - especially good for TOGAF
 - Link of the Day
-	- **[Technology Radar](https://www.thoughtworks.com/radar)** by /thoughtworks  
+	- **[Technology Radar](https://www.thoughtworks.com/radar)** by /thoughtworks
+   	- [Martin Fowler's blog](https://martinfowler.com/)
 - Activity
 	- [About assignments](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment-desc.md) 
 	- [**Assignment #01**](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment-1-20230929.md)

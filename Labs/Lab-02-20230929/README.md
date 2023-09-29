@@ -10,7 +10,8 @@
 ](https://docs.google.com/document/d/1jMrBDthHbVp2ngmdCZfxooe76mnV3En7efdcZV33w54/edit?usp=sharing) 
 	- Further approaches to model/visualize architectures:
 		- ["4+1" View model](https://arxiv.org/ftp/arxiv/papers/2006/2006.04975.pdf) (good [wikipedia ref](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model))
-		- **[The C4 Model](https://c4model.com/)**  
+		- **[The C4 Model](https://c4model.com/)**
+			- [Agile Software Architecture Sketches and NoUML](https://www.infoq.com/articles/agile-software-architecture-sketches-NoUML) by Simon Brown  
 	- From Software Architecture to Enterprise Architecture: [TOGAF](https://www.opengroup.org/togaf) standard	
 - Tool/Platform of the day
 	- [ArchiMate](https://www.archimatetool.com/) - especially good for TOGAF

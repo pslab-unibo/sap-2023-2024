@@ -8,11 +8,6 @@
 plugins {
     // Apply the java plugin to add support for Java
     java
-
-    // SPRING BOOT
-    id("org.springframework.boot") version "2.6.1"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-
     // Apply the application plugin to add support for building an application
     application
 }
@@ -25,27 +20,18 @@ dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:31.1-jre")
 
-    // Spring Boot
-    implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
+    // Websocket
+    implementation("org.java-websocket:Java-WebSocket:1.5.3")
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-
-    // Use Spring Boot Test Starter for testing.
-    testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.1")
-    }
-}
-
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(20))
+        languageVersion.set(JavaLanguageVersion.of(19))
     }
 }
 

@@ -14,7 +14,7 @@ public class AppMain {
 	inputUI.display();
 
 	new MyTextView(model);
-	MyTextInputUI input2 = new MyTextInputUI();
+	MyTextInputUIView input2 = new MyTextInputUIView();
 	input2.addObserver(controller);
 	input2.startGettingInput();
   }	

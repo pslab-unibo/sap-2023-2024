@@ -10,28 +10,27 @@ import javax.swing.SwingUtilities;
 
 class MyRemoteView implements RemoteModelObserver {
 
-	private MyFrame frame;
+	private final MyFrame frame;
 	
 	public MyRemoteView() {		
 	    frame = new MyFrame();
 	}
 
+	@Override
 	public void notifyModelUpdated(int state) {
 		log("model updated => updating the view");
 		frame.updateView(state);
 	}
 		
 	public void display() {
-		SwingUtilities.invokeLater(() -> {
-			frame.setVisible(true);
-		});
+		SwingUtilities.invokeLater(() -> frame.setVisible(true));
 	}
 
 	private void log(String msg) {
 		System.out.println("[View] " + msg);
 	}
 	
-	class MyFrame extends JFrame  {
+	static class MyFrame extends JFrame  {
 
 		private JTextField state;
 

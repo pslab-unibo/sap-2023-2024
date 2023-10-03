@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 class MyRemoteView implements RemoteModelObserver {
 
-	private MyFrame frame;
+	private final MyFrame frame;
 	
 	public MyRemoteView() {		
 	    frame = new MyFrame();

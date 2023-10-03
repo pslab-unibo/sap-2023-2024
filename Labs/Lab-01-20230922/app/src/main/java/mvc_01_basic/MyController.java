@@ -3,12 +3,13 @@ package mvc_01_basic;
 
 public class MyController implements UserInputObserver {
 	
-	private ModelInterface model;
+	private final ModelInterface model;
 
 	public MyController(ModelInterface model){
 		this.model = model;
 	}
-	
+
+	@Override
 	public void notifyNewUpdateRequested() {
 		log("New update requested by the user");
 		model.update();

@@ -9,18 +9,16 @@ class MyRemoteViewStub implements ModelObserver {
 
 	private final static String EXCHANGE_NAME = "mvc";
 	private Channel channel;
-	private Connection connection;
-	private ConnectionFactory factory;
 
-	private ModelObserverSource model;
+	private final ModelObserverSource model;
 	
 	public MyRemoteViewStub(ModelObserverSource model) {		
 		this.model = model;		
 	    model.addObserver(this);	    
 	    try {
-			factory = new ConnectionFactory();
+			ConnectionFactory factory = new ConnectionFactory();
 		    factory.setHost("localhost");
-		    connection = factory.newConnection();		    
+			Connection connection = factory.newConnection();
 		    channel = connection.createChannel();
 		    channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 		    System.out.println("Remote View Stub installed.");
@@ -29,6 +27,7 @@ class MyRemoteViewStub implements ModelObserver {
 		}
 	}
 
+	@Override
 	public void notifyModelUpdated() {
 		try {		    
 		    String message = "" + model.getState();	  

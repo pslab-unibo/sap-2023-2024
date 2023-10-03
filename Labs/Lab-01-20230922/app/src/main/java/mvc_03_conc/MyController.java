@@ -3,7 +3,7 @@ package mvc_03_conc;
 
 public class MyController implements UserInputObserver {
 	
-	private ModelInterface model;
+	private final ModelInterface model;
 
 	public MyController(ModelInterface model){
 		this.model = model;

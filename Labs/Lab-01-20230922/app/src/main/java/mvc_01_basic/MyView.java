@@ -10,15 +10,16 @@ import javax.swing.SwingUtilities;
 
 public class MyView implements ModelObserver {
 
-	private ModelObserverSource model;
-	private MyFrame frame;
+	private final ModelObserverSource model;
+	private final MyFrame frame;
 	
 	public MyView(ModelObserverSource model) {		
 		this.model = model;		
-	    model.addObserver(this);	    
+	    model.addObserver(this);
 	    frame = new MyFrame(model.getState());
 	}
 
+	@Override
 	public void notifyModelUpdated() {
 		log("model updated => updating the view");
 		frame.updateView(model.getState());

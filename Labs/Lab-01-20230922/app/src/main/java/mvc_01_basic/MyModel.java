@@ -5,12 +5,12 @@ import java.util.List;
 
 public class MyModel implements ModelObserverSource {
 
-	private List<ModelObserver> observers;
+	private final List<ModelObserver> observers;
 	private int state;
 	
 	public MyModel(){
 		state = 0;
-		observers = new ArrayList<ModelObserver>();
+		observers = new ArrayList<>();
 	}
 	
 	public void update(){

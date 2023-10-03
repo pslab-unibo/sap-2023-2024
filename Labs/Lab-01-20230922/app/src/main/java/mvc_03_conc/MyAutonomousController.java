@@ -3,7 +3,7 @@ package mvc_03_conc;
 
 public class MyAutonomousController extends Thread {
 	
-	private ModelInterface model;
+	private final ModelInterface model;
 
 	public MyAutonomousController(ModelInterface model){
 		this.model = model;

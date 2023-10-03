@@ -6,7 +6,7 @@ import mvc_01_basic.*;
 
 class MyRemoteViewProxy implements ModelObserver {
 
-	private ModelObserverSource model;
+	private final ModelObserverSource model;
 	private RemoteModelObserver remoteView;
 	
 	public MyRemoteViewProxy(ModelObserverSource model) {		

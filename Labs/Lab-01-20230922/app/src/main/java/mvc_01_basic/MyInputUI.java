@@ -15,23 +15,22 @@ import javax.swing.SwingUtilities;
 
 public class MyInputUI implements UserInputSource {
 
-	private List<UserInputObserver> observers;
+	private final List<UserInputObserver> observers;
 
-	private MyFrame frame;
+	private final MyFrame frame;
 	
 	public MyInputUI() {		
-		observers = new ArrayList<UserInputObserver>();		
+		observers = new ArrayList<>();
 	    frame = new MyFrame();
 	}
 
+	@Override
 	public void addObserver(UserInputObserver obs){
 		observers.add(obs);
 	}
 
 	public void display() {
-		SwingUtilities.invokeLater(() -> {
-			frame.setVisible(true);
-		});
+		SwingUtilities.invokeLater(() -> frame.setVisible(true));
 	}
 
 	private void log(String msg) {
@@ -39,8 +38,6 @@ public class MyInputUI implements UserInputSource {
 	}
 	
 	class MyFrame extends JFrame implements ActionListener {
-
-		private JTextField state;
 
 		public MyFrame() {
 			super("My Input UI");

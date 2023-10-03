@@ -5,12 +5,17 @@ import java.io.BufferedReader;
 import java.util.*;
 import java.io.*;
 
-class MyTextInputUI implements UserInputSource {
+class MyTextInputUIView implements UserInputSource {
 
-	private List<UserInputObserver> observers;
+	private final List<UserInputObserver> observers;
 	
-	public MyTextInputUI() {		
-		observers = new ArrayList<UserInputObserver>();		
+	public MyTextInputUIView() {
+		observers = new ArrayList<>();
+	}
+
+	@Override
+	public void addObserver(UserInputObserver obs){
+		observers.add(obs);
 	}
 
 	public void startGettingInput(){
@@ -29,9 +34,7 @@ class MyTextInputUI implements UserInputSource {
 		}).start();
 	}
 
-	public void addObserver(UserInputObserver obs){
-		observers.add(obs);
-	}
+
 
 	private void notifyNewUpdateRequested(){
 		for (var obs: observers){

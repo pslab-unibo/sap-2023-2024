@@ -1,32 +1,79 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Style (Optional) -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        #state {
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>Model State</h1>
-<p id="state">Loading...</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="display-4">Model State</h1>
+            <p id="state" class="alert alert-primary" role="alert">Loading...</p>
+        </div>
+    </div>
+</div>
+
 <script>
     const stateElement = document.getElementById('state');
-    const socket = new WebSocket('ws://localhost:8080');
 
-    socket.addEventListener('open', (_) => {
-        console.log('Connected to WebSocket Server!');
-    });
+    function createWebSocketConnection() {
+        const socket = new WebSocket('ws://localhost:8080');
 
-    socket.addEventListener('message', (event) => {
-        console.log('Received:', event.data);
-        const message = event.data;
-        if (message.includes('State:')) {
-            stateElement.textContent = message.split('State:')[1].trim();
-        }
-    });
+        socket.addEventListener('open', (_) => {
+            console.log('Connected to WebSocket Server!');
+            stateElement.textContent = 'Connected';
+            stateElement.className = 'alert alert-success';
+        });
 
-    socket.addEventListener('close', (_) => {
-        console.log('Disconnected from WebSocket Server');
-    });
+        socket.addEventListener('message', (event) => {
+            console.log('Received:', event.data);
+            const message = event.data;
+            if (message.includes('State:')) {
+                stateElement.textContent = message.split('State:')[1].trim();
+                stateElement.className = 'alert alert-success';
+            }
+        });
+
+        socket.addEventListener('close', (_) => {
+            console.log('Disconnected from WebSocket Server');
+            stateElement.textContent = 'Disconnected. Retrying...';
+            stateElement.className = 'alert alert-danger';
+            setTimeout(createWebSocketConnection, 2000); // Retry every 2 seconds
+        });
+
+        socket.addEventListener('error', (error) => {
+            console.log('WebSocket Error:', error);
+            // You might want to implement additional error handling logic here
+        });
+    }
+
+    createWebSocketConnection();
 </script>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>

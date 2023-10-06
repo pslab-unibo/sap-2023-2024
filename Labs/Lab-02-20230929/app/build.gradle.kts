@@ -20,6 +20,10 @@ dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:31.1-jre")
 
+    // Adding SLF4J API and Logback (SLF4J implementation)
+    implementation("org.slf4j:slf4j-api:2.0.5")
+    implementation("ch.qos.logback:logback-classic:1.4.7")
+
     // Websocket
     implementation("org.java-websocket:Java-WebSocket:1.5.3")
     // Use JUnit Jupiter API for testing.

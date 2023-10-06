@@ -1,4 +1,4 @@
-package task_one;
+package task_one.controller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,11 +8,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MyInputUI implements UserInputSource {
-
+	private static final Logger logger = Logger.getLogger(MyInputUI.class.getName());
 	private final List<UserInputObserver> observers;
-
 	private final MyFrame frame;
 	
 	public MyInputUI() {		
@@ -27,10 +28,6 @@ public class MyInputUI implements UserInputSource {
 
 	public void display() {
 		SwingUtilities.invokeLater(() -> frame.setVisible(true));
-	}
-
-	private void log(String msg) {
-		System.out.println("[InputUI] " + msg);
 	}
 	
 	class MyFrame extends JFrame implements ActionListener {
@@ -59,12 +56,13 @@ public class MyInputUI implements UserInputSource {
 	
 		public void actionPerformed(ActionEvent ev) {
 			try {
-				log("New input detected.");
+				logger.info("New input detected.");
 				for (UserInputObserver obs: observers){
 					obs.notifyNewUpdateRequested();
 				}
 			} catch (Exception ex) {
-			}
+				logger.log(Level.SEVERE, "Exception while processing input", ex);
+		}
 		}	
 	}
 	

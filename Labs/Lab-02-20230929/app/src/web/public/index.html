@@ -1,0 +1,32 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+<h1>Model State</h1>
+<p id="state">Loading...</p>
+<script>
+    const stateElement = document.getElementById('state');
+    const socket = new WebSocket('ws://localhost:8080');
+
+    socket.addEventListener('open', (_) => {
+        console.log('Connected to WebSocket Server!');
+    });
+
+    socket.addEventListener('message', (event) => {
+        console.log('Received:', event.data);
+        const message = event.data;
+        if (message.includes('State:')) {
+            stateElement.textContent = message.split('State:')[1].trim();
+        }
+    });
+
+    socket.addEventListener('close', (_) => {
+        console.log('Disconnected from WebSocket Server');
+    });
+</script>
+</body>
+</html>

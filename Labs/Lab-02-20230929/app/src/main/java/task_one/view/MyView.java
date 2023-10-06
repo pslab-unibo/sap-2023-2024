@@ -1,12 +1,16 @@
-package task_one;
+package task_one.view;
 
+import task_one.model.ModelObserver;
+import task_one.model.ModelObserverSource;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MyView implements ModelObserver {
-
+	private static final Logger logger = Logger.getLogger(MyView.class.getName());
 	private final ModelObserverSource model;
 	private final MyFrame frame;
 	
@@ -18,23 +22,18 @@ public class MyView implements ModelObserver {
 
 	@Override
 	public void notifyModelUpdated() {
-		log("model updated => updating the view");
+		Logger.getLogger(MyView.class.getName()).log(Level.INFO, "Model updated");
 		frame.updateView(model.getState());
 	}
 		
 	public void display() {
-		SwingUtilities.invokeLater(() -> {
-			frame.setVisible(true);
-		});
+		SwingUtilities.invokeLater(() -> frame.setVisible(true));
 	}
 
-	private void log(String msg) {
-		System.out.println("[View] " + msg);
-	}
 	
-	class MyFrame extends JFrame  {
+	static class MyFrame extends JFrame  {
 
-		private JTextField state;
+		private final JTextField state;
 
 		public MyFrame(int initState) {
 			super("My View");
@@ -60,11 +59,9 @@ public class MyView implements ModelObserver {
 	
 		public void updateView(int newState) {
 			try {
-				SwingUtilities.invokeLater(() -> {
-					state.setText("" + newState);
-				});
+				SwingUtilities.invokeLater(() -> state.setText("" + newState));
 			} catch (Exception ex){
-				ex.printStackTrace();
+				logger.log(Level.SEVERE, null, ex);
 			}
 		}
 	}

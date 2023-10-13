@@ -19,6 +19,7 @@ public class DataSourceLayerImpl implements DataSourceLayer {
 
 	@Override
 	public void init(Optional<Layer> layer) {
+		makeDir(dbaseFolder);
 		makeDir(USERS_PATH);
 		makeDir(ESCOOTERS_PATH);
 		makeDir(RIDES_PATH);

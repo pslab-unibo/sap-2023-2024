@@ -2,6 +2,9 @@ package sap.escooters.domain_layer;
 
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import sap.escooters.data_source_layer.DataSourceLayer;
 import sap.escooters.domain_layer.EScooter.EScooterState;
 import sap.layers.Layer;
@@ -14,6 +17,7 @@ public class DomainLayerImpl implements DomainLayer {
 	private HashMap<String, EScooter> escooters;
 	private HashMap<String, Ride> rides;
 	private long rideCounter;
+    static Logger logger = Logger.getLogger("[DomainLayer]");	
 	
 	public DomainLayerImpl() {
 		users = new HashMap<String, User>();
@@ -37,6 +41,7 @@ public class DomainLayerImpl implements DomainLayer {
 		User user = new User(id, name, surname);
 		users.put(id, user);				
 		user.save();
+		logger.log(Level.INFO, "New user registered: " + id);
 	}
 
 
@@ -45,6 +50,7 @@ public class DomainLayerImpl implements DomainLayer {
 		EScooter escooter = new EScooter(id);
 		escooters.put(id, escooter);				
 		escooter.save();
+		logger.log(Level.INFO, "New escooter registered: " + id);
 	}
 	
 	@Override
@@ -56,6 +62,7 @@ public class DomainLayerImpl implements DomainLayer {
 		rides.put(rideId, ride);				
 		escooter.save();
 		ride.save();		
+		logger.log(Level.INFO, "Started ride: " + rideId);
 		return rideId;
 	}
 

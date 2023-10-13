@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>EScooterSystem - Ride Dashboard</title>
+   
+  </head>
+  <body>
+    <h2>EScooterSystem - Ride Dashboard</h2>
+      
+    <p>
+      <label>User id:</label><br>
+      <input type="text" id="userId" value="aricci"><br><br>
+      <label>EScooter id:</label><br>
+      <input type="text" id="escooterId" value="escooter-01"><br><br>
+      <button id="startRide">Start Ride</button> <br>
+      <p id="startRideResult"></p>
+    </p> 
+    <br><br>
+    <p>
+      <label>Ride id:</label><br>
+      <input type="text" id="rideId"><br><br>
+      <button id="endRide">End Ride</button> <br>
+      <p id="endRideResult"></p>
+    </p> 
+
+
+    <script>
+
+
+      async function postData(url = "", data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+           // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data), // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      }
+
+      async function startRideRequest(){
+        const reply = await postData("http://localhost:8081/api/rides",
+          {
+            userId: document.getElementById("userId").value,
+            escooterId: document.getElementById("escooterId").value,
+          })
+        
+        if (reply.result=='ok'){
+          document.getElementById("startRideResult").innerHTML = "OK - ride id " + reply.rideId;
+        } else {
+          document.getElementById("startRideResult").innerHTML = "NOT OK.";
+        }
+      }
+
+      document.getElementById("startRide").addEventListener("click", () => {
+        startRideRequest();
+      })
+
+      async function endRideRequest(rideId){
+        const reply = await postData("http://localhost:8081/api/rides/"+rideId+"/end",{})
+        console.log(reply);
+        if (reply.result=='ok'){
+          document.getElementById("endRideResult").innerHTML = "OK - ride ended. ";
+        } else {
+          document.getElementById("endRideResult").innerHTML = "NOT OK.";
+        }
+      }
+
+      document.getElementById("endRide").addEventListener("click", () => {
+        endRideRequest(document.getElementById("rideId").value);
+      })
+
+    </script>
+  </body>
+
+
+</html>

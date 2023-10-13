@@ -9,15 +9,17 @@ import sap.layers.Layer;
 public class PresentationLayerImpl implements PresentationLayer {
 
 	private ServiceLayer serviceLayer;
+	private int port;
 	
-	public PresentationLayerImpl() {	
+	public PresentationLayerImpl(int port) {	
+		this.port = port;
 	}
 		
 	@Override
 	public void init(Optional<Layer> layer) {
 		serviceLayer = (ServiceLayer) layer.get();
     	Vertx vertx = Vertx.vertx();
-		EScooterManServer myVerticle = new EScooterManServer(8081, serviceLayer);
+		EScooterManServer myVerticle = new EScooterManServer(port, serviceLayer);
 		vertx.deployVerticle(myVerticle);		
 	}
 }

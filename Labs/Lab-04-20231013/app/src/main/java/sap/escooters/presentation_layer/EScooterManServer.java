@@ -32,7 +32,7 @@ public class EScooterManServer extends AbstractVerticle {
 		Router router = Router.router(vertx);
 
 		/* static files by default searched in "webroot" directory */
-		router.route("/static/*").handler(StaticHandler.create());
+		router.route("/static/*").handler(StaticHandler.create().setCachingEnabled(false));
 		router.route().handler(BodyHandler.create());
 		
 		router.route(HttpMethod.POST, "/api/users").handler(this::registerNewUser);
@@ -124,8 +124,9 @@ public class EScooterManServer extends AbstractVerticle {
 		
 		JsonObject reply = new JsonObject();
 		try {
-			serviceLayer.startNewRide(userId, escooterId);
+			String rideId = serviceLayer.startNewRide(userId, escooterId);
 			reply.put("result", "ok");
+			reply.put("rideId", rideId);
 		} catch (Exception  ex) {
 			reply.put("result", "start-new-ride-failed");
 		}

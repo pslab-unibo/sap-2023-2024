@@ -39,7 +39,7 @@
       }
 
       async function sendRequest(){
-        const reply = await postData("http://localhost:8081/api/users",
+        const reply = await postData("/api/users",
           {
             name: document.getElementById("name").value,
             surname: document.getElementById("surname").value,

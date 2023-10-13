@@ -20,9 +20,9 @@ public class DataSourceLayerImpl implements DataSourceLayer {
 	@Override
 	public void init(Optional<Layer> layer) {
 		makeDir(dbaseFolder);
-		makeDir(USERS_PATH);
-		makeDir(ESCOOTERS_PATH);
-		makeDir(RIDES_PATH);
+		makeDir(dbaseFolder + File.separator + USERS_PATH);
+		makeDir(dbaseFolder + File.separator + ESCOOTERS_PATH);
+		makeDir(dbaseFolder + File.separator + RIDES_PATH);
 	}	
 
 	@Override
@@ -55,7 +55,7 @@ public class DataSourceLayerImpl implements DataSourceLayer {
 	
 	private void makeDir(String name) {
 		try {
-			File dir = new File(dbaseFolder + File.separator + name);
+			File dir = new File(name);
 			if (!dir.exists()) {
 				dir.mkdir();
 			}

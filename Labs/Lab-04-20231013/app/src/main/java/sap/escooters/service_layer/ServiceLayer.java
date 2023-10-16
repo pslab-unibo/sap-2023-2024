@@ -3,6 +3,8 @@ package sap.escooters.service_layer;
 import io.vertx.core.json.JsonObject;
 import sap.layers.Layer;
 
+// Protegge dal livello sotto e non restituirà mai il modello permettendo di catturare parte della logica di business
+
 public interface ServiceLayer extends Layer {
 	
 	/* about users */

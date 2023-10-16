@@ -15,26 +15,27 @@ import sap.escooters.service_layer.*;
 
 public class EScooterManServer extends AbstractVerticle {
 
-	private int port;
-	private ServiceLayer serviceLayer;
-    static Logger logger = Logger.getLogger("[EScooter Server]");	
+	private final int port;
+	private final ServiceLayer serviceLayer;
+    static Logger logger = Logger.getLogger("[EScooter Server]");
 
 	public EScooterManServer(int port, ServiceLayer serviceLayer) {
 		this.port = port;
 		this.serviceLayer = serviceLayer;
 		logger.setLevel(Level.INFO);
 	}
-	
-	
+
+
 	public void start() {
 		logger.log(Level.INFO, "EScooterMan server initializing...");
 		HttpServer server = vertx.createHttpServer();
 		Router router = Router.router(vertx);
 
 		/* static files by default searched in "webroot" directory */
-		router.route("/static/*").handler(StaticHandler.create().setCachingEnabled(false));
+		router.route("/static/*").handler(StaticHandler.create("Labs/Lab-04-20231013/app/webroot").setCachingEnabled(false));
+//		router.route("/static/*").handler(StaticHandler.create().setCachingEnabled(false));
 		router.route().handler(BodyHandler.create());
-		
+
 		router.route(HttpMethod.POST, "/api/users").handler(this::registerNewUser);
 		router.route(HttpMethod.GET, "/api/users/:userId").handler(this::getUserInfo);
 		router.route(HttpMethod.POST, "/api/escooters").handler(this::registerNewEScooter);
@@ -46,19 +47,19 @@ public class EScooterManServer extends AbstractVerticle {
 		server
 		.requestHandler(router)
 		.listen(port);
-		
+
 		logger.log(Level.INFO, "EScooterMan server ready - port: " + port);
 	}
-	
+
 	protected void registerNewUser(RoutingContext context) {
 		logger.log(Level.INFO, "New registration user request - " + context.currentRoute().getPath());
 		JsonObject userInfo = context.body().asJsonObject();
 		logger.log(Level.INFO, "Body: " + userInfo.encodePrettily());
-		
+
 		String id = userInfo.getString("id");
 		String name = userInfo.getString("name");
 		String surname = userInfo.getString("surname");
-		
+
 		JsonObject reply = new JsonObject();
 		try {
 			serviceLayer.registerNewUser(id, name, surname);
@@ -66,9 +67,9 @@ public class EScooterManServer extends AbstractVerticle {
 		} catch (UserIdAlreadyExistingException ex) {
 			reply.put("result", "user-id-already-existing");
 		}
-		sendReply(context, reply); 	
+		sendReply(context, reply);
 	}
-	
+
 	protected void getUserInfo(RoutingContext context) {
 		logger.log(Level.INFO, "New user info request: " + context.currentRoute().getPath());
 	    String userId = context.pathParam("userId");
@@ -87,9 +88,9 @@ public class EScooterManServer extends AbstractVerticle {
 		logger.log(Level.INFO, "new EScooter registration request: " + context.currentRoute().getPath());
 		JsonObject escooterInfo = context.body().asJsonObject();
 		logger.log(Level.INFO, "Body: " + escooterInfo.encodePrettily());
-		
+
 		String id = escooterInfo.getString("id");
-		
+
 		JsonObject reply = new JsonObject();
 		try {
 			serviceLayer.registerNewEScooter(id);
@@ -113,15 +114,15 @@ public class EScooterManServer extends AbstractVerticle {
 		}
 		sendReply(context, reply);
 	}
-	
+
 	protected void startNewRide(RoutingContext context) {
 		logger.log(Level.INFO, "Start new ride request: " + context.currentRoute().getPath());
 		JsonObject rideInfo = context.body().asJsonObject();
 		logger.log(Level.INFO, "Body: " + rideInfo.encodePrettily());
-		
+
 		String userId = rideInfo.getString("userId");
 		String escooterId = rideInfo.getString("escooterId");
-		
+
 		JsonObject reply = new JsonObject();
 		try {
 			String rideId = serviceLayer.startNewRide(userId, escooterId);
@@ -132,7 +133,7 @@ public class EScooterManServer extends AbstractVerticle {
 		}
 		sendReply(context, reply);
 	}
-	
+
 	protected void getRideInfo(RoutingContext context) {
 		logger.log(Level.FINE, "New ride info request: " + context.currentRoute().getPath());
 	    String rideId = context.pathParam("rideId");
@@ -161,11 +162,11 @@ public class EScooterManServer extends AbstractVerticle {
 		}
 		sendReply(context, reply);
 	}
-	
+
 	private void sendReply(RoutingContext request, JsonObject reply) {
 		HttpServerResponse response = request.response();
 		response.putHeader("content-type", "application/json");
 		response.end(reply.toString());
 	}
-	
+
 }

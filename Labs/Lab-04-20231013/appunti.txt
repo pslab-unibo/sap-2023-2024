@@ -4,4 +4,40 @@ Dove implementiamo delle fitness function per verificare che l'architettura sia 
 
 È monolitico perchè o un unico server ed è tutto unito. Quindi non è microservizi.
 
+L'utente fa partire una nuova ride e io come manager vedo quanti sono gli scooter in esecuzione.
+Tutto semplice per far vedere come è l'architettura a livelli.
+- Nel domain layer viene separata la logica nel DomainLayer. L'idea è sfruttare al possibile OOP
+Il fatto che siano persistenti diventa un fatto secondario, l'evoluzione la dinamica la devo sfruttare con l'OOP.
+L'occorenza, disaccopiamento del controllo? Non lo affrontiamo adesso. Assumiamo che non ci sia concorrenza in una
+architettura a livelli perchè e tutto serializzato.
 
+Nel ServiceLayer ci sono gli use cases.
+La PresentationLayer utilizza vertex con un web server espondendo API per farla REST oriented. Quindi dal punto di vista
+che espone sono rest oriented (modellazione a risorse, anche le risorse logiche).
+
+Dobbiamo aggiungere un lato dove si può avere una dashboard con il numero di ride occorrenti.
+Ogni volta che una ride termina, voglio rappresentarla monitorando il numero di ride rendendolo visibile in una daschnoard
+che utilizzerebbe il manager delle ride. Come faccio a sviluppare questa parte qui? Dove l'aggiornamento non parte
+dall'utente.  Con port and adapter lo modelliamo tagliando la parte teconologica, la notifica può arrivare socket, kafca
+(questo è l'adapter). Per lo stesso model posso avere più view, non devo toccare la business logic.
+
+Prima di tutto definiamo i livelli. Quali vogliamo?
+- Domain (Business logic). Devono finirci le porte implementate dagli adapter. Non gli viene più iniettato.
+Dovremo trovargli un modo per iniettargli l'adapter. Il domain non conosce nessuno. Non conosce nemmeno il service.
+Ci sarà ad esempio il DataSourcePort che utilizza jsonObject. L'importante che la porta sia nel domain.
+ad esempio RideDasBoardPort (ad esempio notifyNewRide, notifyRideTerminated, notifyScooterTerminated, notifyScooterBooked, notifyScooterUnlocked).
+Dove ho l'implementazione dell'adapter non ho più un datasourceimplementationlayer ma un infrastrutturalayer dove ci sono
+persistenza, UI.
+Nell; infastrucrre-layer gli viene iniettata la porta alla business logic init(ApplicationAPI appAPI)
+- Service (Application logic/API). Qui ci sono gli use cases. Qui ci sono le interfacce che vengono implementate dal domain.
+Si assume che una API sia asiincrona. Non si assume che sia sincrona. Quindi non si assume che sia sincrona.
+Se invece decido che sia sincrona la signatura cambia. Non è più un void ma un boolean. Se è sincrona devo aspettare che
+finisca. Se è asincrona non aspetto che finisca. Se è sincrona devo aspettare che finisca.
+
+Nell'applicazione le stiamo gestendo in modo sincrono (un vertex che fa una chiama sequenziale).
+
+La concorrenza a seconda dei casi la concorrenza se gestita modifica.
+Per quello che con una visione a microservrizi decompongo il monoliti dove avremo servizi separati.
+Qui invece abbiamo un unico servizio.
+
+- Presentation (UI). Qui ci sono le interfacce che vengono implementate dal service.

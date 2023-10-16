@@ -1,0 +1,7 @@
+Non viene usata come persistenza un db ma il file system.
+Nel file delle dipendenze c'è anche ArchUnit per fare test di architettura.
+Dove implementiamo delle fitness function per verificare che l'architettura sia rispettata.
+
+È monolitico perchè o un unico server ed è tutto unito. Quindi non è microservizi.
+
+

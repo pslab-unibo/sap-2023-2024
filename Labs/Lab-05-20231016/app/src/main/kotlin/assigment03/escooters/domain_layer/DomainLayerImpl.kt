@@ -17,6 +17,10 @@ class DomainLayerImpl : DomainLayer {
         private val logger = Logger.getLogger("[DomainLayer]")
     }
 
+    override fun init(layer: Layer?) {
+        dataSourceLayer = layer as DataSourceLayer
+    }
+
     override fun addNewUser(id: String, name: String, surname: String) {
         val user = User(id, name, surname)
         users[id] = user
@@ -45,9 +49,6 @@ class DomainLayerImpl : DomainLayer {
 
     override fun getUser(userId: String) = users[userId]
     override fun getEScooter(id: String) = escooters[id]
-    override fun getRide(id: String) = rides[id]
-    override fun init(layer: Layer?) {
-        dataSourceLayer = layer as DataSourceLayer
-    }
+    override fun getRide(rideId: String) = rides[rideId]
 
 }

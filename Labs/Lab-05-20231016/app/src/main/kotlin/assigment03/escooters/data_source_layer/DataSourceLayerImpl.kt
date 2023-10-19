@@ -7,25 +7,25 @@ import java.io.File
 import java.io.FileWriter
 
 class DataSourceLayerImpl(private val dbaseFolder: String) : DataSourceLayer {
-    private val USERS_PATH = "users"
-    private val ESCOOTERS_PATH = "escooters"
-    private val RIDES_PATH = "rides"
+    private val userPath = "users"
+    private val escooterPath = "escooters"
+    private val riderPath = "rides"
 
     override fun init(layer: Layer?) {
         makeDir(dbaseFolder)
-        makeDir("$dbaseFolder${File.separator}$USERS_PATH")
-        makeDir("$dbaseFolder${File.separator}$ESCOOTERS_PATH")
-        makeDir("$dbaseFolder${File.separator}$RIDES_PATH")
+        makeDir("$dbaseFolder${File.separator}$userPath")
+        makeDir("$dbaseFolder${File.separator}$escooterPath")
+        makeDir("$dbaseFolder${File.separator}$riderPath")
     }
 
     @Throws(DataSourceException::class)
-    override fun saveUser(user: JsonObject) = saveObj(USERS_PATH, user.getString("id"), user)
+    override fun saveUser(user: JsonObject) = saveObj(userPath, user.getString("id"), user)
 
     @Throws(DataSourceException::class)
-    override fun saveEScooter(escooter: JsonObject) = saveObj(ESCOOTERS_PATH, escooter.getString("id"), escooter)
+    override fun saveEScooter(escooter: JsonObject) = saveObj(escooterPath, escooter.getString("id"), escooter)
 
     @Throws(DataSourceException::class)
-    override fun saveRide(ride: JsonObject) = saveObj(RIDES_PATH, ride.getString("id"), ride)
+    override fun saveRide(ride: JsonObject) = saveObj(riderPath, ride.getString("id"), ride)
 
     private fun saveObj(db: String, id: String, obj: JsonObject) {
         try {

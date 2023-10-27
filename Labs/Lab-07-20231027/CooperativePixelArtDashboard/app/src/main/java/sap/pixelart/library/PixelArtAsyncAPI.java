@@ -4,6 +4,13 @@ import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
+/**
+ * 
+ * Async Interface of a library for interacting with the PixelArt Service
+ * 
+ * @author aricci
+ *
+ */
 public interface PixelArtAsyncAPI  {
 	
 	Future<String> createBrush();

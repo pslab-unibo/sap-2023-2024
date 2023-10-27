@@ -1,7 +1,8 @@
 package sap.pixelart.dashboard;
 
 import sap.pixelart.dashboard.controller.Controller;
-import sap.pixelart.library.*;
+import sap.pixelart.library.PixelArtAsyncAPI;
+import sap.pixelart.library.PixelArtServiceLib;
 
 public class PixelArtDashboardMain {
 	

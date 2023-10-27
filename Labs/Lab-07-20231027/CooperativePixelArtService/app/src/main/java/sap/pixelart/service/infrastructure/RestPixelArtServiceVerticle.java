@@ -85,7 +85,6 @@ public class RestPixelArtServiceVerticle extends AbstractVerticle implements Pix
 			reply.put("brushes", brushes);
 			sendReply(context.response(), reply);
 		} catch (Exception ex) {
-			reply.put("result", "error");
 			sendServiceError(context.response());
 		}
 	}
@@ -174,18 +173,8 @@ public class RestPixelArtServiceVerticle extends AbstractVerticle implements Pix
 		}
 	}
 
-	@Override
-	public void pixelColorChanged(int x, int y, int color) {
-		logger.log(Level.INFO, "New PixelGrid event - pixel selected");
-		EventBus eb = vertx.eventBus();
-		JsonObject obj = new JsonObject();
-		obj.put("event", "pixel-selected");
-		obj.put("x", x);
-		obj.put("y", y);
-		obj.put("color", color);
-		eb.publish(PIXEL_GRID_CHANNEL, obj);
-	}
-
+	/* Handling subscribers using web sockets */
+	
 	protected void handleEventSubscription(HttpServer server, String path) {
 		server.webSocketHandler(webSocket -> {
 			if (webSocket.path().equals(path)) {
@@ -208,6 +197,23 @@ public class RestPixelArtServiceVerticle extends AbstractVerticle implements Pix
 			}
 		});
 	}
+	
+	/* This is notified by the application/domain layer */
+	
+	@Override
+	public void pixelColorChanged(int x, int y, int color) {
+		logger.log(Level.INFO, "New PixelGrid event - pixel selected");
+		EventBus eb = vertx.eventBus();
+		JsonObject obj = new JsonObject();
+		obj.put("event", "pixel-selected");
+		obj.put("x", x);
+		obj.put("y", y);
+		obj.put("color", color);
+		eb.publish(PIXEL_GRID_CHANNEL, obj);
+	}
+
+	/* Aux methods */
+	
 
 	private void sendReply(HttpServerResponse response, JsonObject reply) {
 		response.putHeader("content-type", "application/json");

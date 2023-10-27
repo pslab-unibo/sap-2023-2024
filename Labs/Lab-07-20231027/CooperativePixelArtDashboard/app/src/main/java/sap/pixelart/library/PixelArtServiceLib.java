@@ -1,5 +1,14 @@
 package sap.pixelart.library;
 
+/**
+ * 
+ * Library for interacting with the PixelArt service
+ * 
+ * - it is a singleton factory
+ * 
+ * @author aricci
+ *
+ */
 public class PixelArtServiceLib {
 
 	private final String DEFAULT_HOST = "localhost";

@@ -1,20 +1,20 @@
-package sap.pixelart.library;
+package sap.pixelart.library.test;
 
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sap.pixelart.library.PixelArtServiceProxy;
+import sap.pixelart.library.PixelArtAsyncAPI;
+import sap.pixelart.library.PixelArtServiceLib;
+import sap.pixelart.library.test.*;
 
 public class TestProxy {
     static Logger logger = Logger.getLogger("[PixelArtServiceProxy Test]");	
 
 	public static void main(String[] args) {
 		
+		PixelArtAsyncAPI serviceProxy = PixelArtServiceLib.getInstance().getDefaultInterface();
 		
-		PixelArtServiceProxy serviceProxy = new PixelArtServiceProxy();
-		serviceProxy.init("localhost", 9000);
-
 		/*
 		serviceProxy.createBrush()
 		.onSuccess(brushId -> {

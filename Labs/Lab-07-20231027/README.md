@@ -11,6 +11,9 @@ Key points:
 Tool of the day:  [Swagger](https://swagger.io/)
 - editor/tool ecosystem to work with API
 - based on [Open API 3.0 standard](https://www.openapis.org/)
+- OpenAPI is good for REST-based API, not designed for Async API. A recent proposal to this purpose: [AsyncAPI](https://www.asyncapi.com/)
+    - aiming at being a standard for Event-Driven Architectures
+
 
 
 	

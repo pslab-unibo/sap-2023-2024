@@ -35,19 +35,30 @@ paths:
       responses:
         default:
           description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - brushId
+                properties:
+                  brushId:
+                    type: string
     get:
       tags:
         - brush
-      summary: Get the current brushes id
+      summary: Get the current brushes (ids)
       description: ''
       operationId: getCurrentBrushes
       responses:
         default:
           description: successful operation
-          # content:
-            # application/json:
-              # schema:
-              #  $ref: '#/components/schemas/Brush'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
   /brushes/{brushId}:
     get:
       tags:
@@ -64,13 +75,15 @@ paths:
             type: string
       responses:
         '200':
-          description: successful operation
-          content:
+          description: a brush to be returned
+          content: 
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/Brush'
         '400':
-          description: Invalid parameters supplied
+          description: invalid parameter supplied
+        '500':
+          description: service internal error
     delete:
       tags:
         - brush
@@ -88,7 +101,9 @@ paths:
         '200':
           description: successful operation
         '400':
-          description: Invalid parameters supplied
+          description: invalid parameter supplied
+        '500':
+          description: service internal error
   /brushes/{brushId}/move-to:
     post:
       tags:
@@ -118,26 +133,10 @@ paths:
       responses:
         '200':
           description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
-          content:
-            application/xml:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
         '400':
-          description: Invalid parameters supplied
+          description: invalid parameter supplied
+        '500':
+          description: service internal error
   /brushes/{brushId}/select-pixel:
     post:
       tags:
@@ -155,6 +154,10 @@ paths:
       responses:
         '200':
           description: successful operation
+        '400':
+          description: invalid parameter supplied
+        '500':
+          description: service internal error
   /brushes/{brushId}/change-color:
     post:
       tags:
@@ -178,6 +181,10 @@ paths:
       responses:
         '200':
           description: successful operation
+        '400':
+          description: invalid parameter supplied
+        '500':
+          description: service internal error
   /pixel-grid:
     get:
       tags:
@@ -188,5 +195,43 @@ paths:
       responses:
         '200':
           description: successful operation
-        '400':
-          description: Invalid parameters supplied
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PixelGrid'
+        '500':
+          description: Service internal error
+components:
+  schemas:
+    Brush:
+      type: object
+      required:
+      - brushId
+      - x
+      - y
+      - color
+      properties:
+        brushId:
+          type: string
+        x:
+          type: integer
+        y:
+          type: integer
+        color:
+          type: integer
+    PixelGrid:
+      type: object
+      required:
+      - numColumns
+      - numRows
+      - pixels
+      properties:
+        numColumns:
+          type: integer
+        numRows:
+          type: integer
+        pixel:
+          type: array
+          items:
+            type: integer
+

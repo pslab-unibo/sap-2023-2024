@@ -1,0 +1,192 @@
+openapi: 3.0.3
+info:
+  title: CooperativePixelArt microservice 
+  description: |-
+    This is the API of the PixelArtUser microservice
+  # termsOfService: http://swagger.io/terms/
+  contact:
+    email: a.ricci@unibo.it
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+# externalDocs:
+#  description: Find out more about Swagger
+#  url: http://swagger.io
+servers:
+  # - url: https://petstore3.swagger.io/api/v3
+  - url: https://localhost:9000/api
+tags:
+  - name: brush
+    description: Operations about brushes
+    # externalDocs:
+    #  description: Find out more
+    #  url: http://swagger.io
+  - name: pixel-grid
+    description: Operations about the pixel grid 
+paths:
+  /brushes:
+    post:
+      tags:
+        - brush
+      summary: Create a new brush to paint the grid
+      description: Create a new brush to paint the grid
+      operationId: createNewBrush
+      responses:
+        default:
+          description: successful operation
+    get:
+      tags:
+        - brush
+      summary: Get the current brushes id
+      description: ''
+      operationId: getCurrentBrushes
+      responses:
+        default:
+          description: successful operation
+          # content:
+            # application/json:
+              # schema:
+              #  $ref: '#/components/schemas/Brush'
+  /brushes/{brushId}:
+    get:
+      tags:
+        - brush
+      summary: Get the current state of a brush
+      description: ''
+      operationId: getBrushInfo
+      parameters:
+        - name: brushId
+          in: path
+          description: The brush id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameters supplied
+    delete:
+      tags:
+        - brush
+      summary: Remove the specified brush
+      description: ''
+      operationId: destroyBrush
+      parameters:
+        - name: brushId
+          in: path
+          description: The brush id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid parameters supplied
+  /brushes/{brushId}/move-to:
+    post:
+      tags:
+        - brush
+      summary: Move the specified brush to a new position on the pixel grid
+      description: ''
+      operationId: moveBrushTo
+      parameters:
+        - name: brushId
+          in: path
+          description: The brush id
+          required: true
+          schema:
+            type: string
+        - name: x
+          in: query
+          description: the new x position
+          required: true
+          schema:
+            type: integer
+        - name: y
+          in: query
+          description: the new y position
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid parameters supplied
+  /brushes/{brushId}/select-pixel:
+    post:
+      tags:
+        - brush
+      summary: Select (paint) the pixel where the specified brush is
+      description: ''
+      operationId: selectPixel
+      parameters:
+        - name: brushId
+          in: path
+          description: The brush id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+  /brushes/{brushId}/change-color:
+    post:
+      tags:
+        - brush
+      summary: Change the color of the specified brush
+      description: ''
+      operationId: changeBrushColor
+      parameters:
+        - name: brushId
+          in: path
+          description: The brush id
+          required: true
+          schema:
+            type: string
+        - name: color
+          in: query
+          description: The new brush color
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+  /pixel-grid:
+    get:
+      tags:
+        - pixel-grid
+      summary: Get the current state of the pixel grid
+      description: ''
+      operationId: getPixelGridState
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid parameters supplied

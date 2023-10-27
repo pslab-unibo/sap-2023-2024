@@ -3,6 +3,12 @@ package sap.pixelart.service.domain;
 import java.util.Collection;
 import java.util.HashMap;
 
+/**
+ * Brush manager entity, managing a collection of brushes
+ * 
+ * @author aricci
+ *
+ */
 public class BrushManager {
     private HashMap<String,Brush> brushes = new java.util.HashMap<>();
 

@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Pixel grid entity
+ * - observable
+ * 
+ * @author aricci
+ *
+ */
 public class PixelGrid {
 	private final int nRows;
 	private final int nColumns;

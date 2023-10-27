@@ -1,5 +1,11 @@
 package sap.pixelart.service.domain;
 
+/**
+ * Brush entity
+ * 
+ * @author aricci
+ *
+ */
 public class Brush {
     private int x, y;
     private int color;

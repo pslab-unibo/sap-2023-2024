@@ -22,28 +22,26 @@ import sap.pixelart.service.domain.*;
  * @author aricci
  *
  */
-public class PixelArtService extends AbstractVerticle implements PixelGridEventObserver {
+public class RestPixelArtServiceVerticle extends AbstractVerticle implements PixelGridEventObserver {
 
 	private int port;
 	private PixelArtAPI pixelArtAPI;
 	static Logger logger = Logger.getLogger("[PixelArt Service]");
 	static String PIXEL_GRID_CHANNEL = "pixel-grid-events";
 
-	public PixelArtService(int port, PixelArtAPI appAPI) {
+	public RestPixelArtServiceVerticle(int port, PixelArtAPI appAPI) {
 		this.port = port;
 		this.pixelArtAPI = appAPI;
 		logger.setLevel(Level.INFO);
 	}
 
 	public void start() {
-		logger.log(Level.INFO, "PixelArt service initializing...");
+		logger.log(Level.INFO, "PixelArt Service initializing...");
 		HttpServer server = vertx.createHttpServer();
 		Router router = Router.router(vertx);
 
-		/* static files by default searched in "webroot" directory */
-		router.route("/static/*").handler(StaticHandler.create().setCachingEnabled(false));
-		router.route().handler(BodyHandler.create());
-
+		/* configure the HTTP routes following a REST style */
+		
 		router.route(HttpMethod.POST, "/api/brushes").handler(this::createBrush);
 		router.route(HttpMethod.GET, "/api/brushes").handler(this::getCurrentBrushes);
 		router.route(HttpMethod.GET, "/api/brushes/:brushId").handler(this::getBrushInfo);
@@ -54,7 +52,11 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		router.route(HttpMethod.GET, "/api/pixel-grid").handler(this::getPixelGridState);
 		this.handleEventSubscription(server, "/api/pixel-grid/events");
 
-		server.requestHandler(router).listen(port);
+		/* start the server */
+		
+		server
+		.requestHandler(router)
+		.listen(port);
 
 		logger.log(Level.INFO, "PixelArt Service ready - port: " + port);
 	}
@@ -67,12 +69,11 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		JsonObject reply = new JsonObject();
 		try {
 			String brushId = pixelArtAPI.createBrush();
-			reply.put("result", "ok");
 			reply.put("brushId", brushId);
+			sendReply(context.response(), reply);
 		} catch (Exception ex) {
-			reply.put("result", "error");
+			sendServiceError(context.response());
 		}
-		sendReply(context, reply);
 	}
 
 	protected void getCurrentBrushes(RoutingContext context) {
@@ -81,12 +82,12 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		JsonObject reply = new JsonObject();
 		try {
 			JsonArray brushes = pixelArtAPI.getCurrentBrushes();
-			reply.put("result", "ok");
 			reply.put("brushes", brushes);
+			sendReply(context.response(), reply);
 		} catch (Exception ex) {
 			reply.put("result", "error");
+			sendServiceError(context.response());
 		}
-		sendReply(context, reply);
 	}
 
 	protected void getBrushInfo(RoutingContext context) {
@@ -95,45 +96,46 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		JsonObject reply = new JsonObject();
 		try {
 			JsonObject info = pixelArtAPI.getBrushInfo(brushId);
-			reply.put("result", "ok");
 			reply.put("brushInfo", info);
+			sendReply(context.response(), reply);
 		} catch (Exception ex) {
-			reply.put("result", "error");
+			sendServiceError(context.response());
 		}
-		sendReply(context, reply);
 	}
 
 	protected void moveBrushTo(RoutingContext context) {
 		logger.log(Level.INFO, "MoveBrushTo request: " + context.currentRoute().getPath());
 		String brushId = context.pathParam("brushId");
-		JsonObject brushInfo = context.body().asJsonObject();
-		logger.log(Level.INFO, "Body: " + brushInfo.encodePrettily());
-		int x = brushInfo.getInteger("x");
-		int y = brushInfo.getInteger("y");
-		JsonObject reply = new JsonObject();
-		try {
-			pixelArtAPI.moveBrushTo(brushId, y, x);
-			reply.put("result", "ok");
-		} catch (Exception ex) {
-			reply.put("result", "error");
-		}
-		sendReply(context, reply);
+		logger.log(Level.INFO, "Brush id: " + brushId);
+		context.request().handler(buf -> {
+			JsonObject brushInfo = buf.toJsonObject();
+			int x = brushInfo.getInteger("x");
+			int y = brushInfo.getInteger("y");
+			JsonObject reply = new JsonObject();
+			try {
+				pixelArtAPI.moveBrushTo(brushId, y, x);
+				sendReply(context.response(), reply);
+			} catch (Exception ex) {
+				sendServiceError(context.response());
+			}
+		});
 	}
 
 	protected void changeBrushColor(RoutingContext context) {
 		logger.log(Level.INFO, "ChangeBrushColor request: " + context.currentRoute().getPath());
 		String brushId = context.pathParam("brushId");
-		JsonObject brushInfo = context.body().asJsonObject();
-		logger.log(Level.INFO, "Body: " + brushInfo.encodePrettily());
-		int c = brushInfo.getInteger("color");
-		JsonObject reply = new JsonObject();
-		try {
-			pixelArtAPI.changeBrushColor(brushId, c);
-			reply.put("result", "ok");
-		} catch (Exception ex) {
-			reply.put("result", "error");
-		}
-		sendReply(context, reply);
+		context.request().handler(buf -> {
+			JsonObject brushInfo = buf.toJsonObject();
+			logger.log(Level.INFO, "Body: " + brushInfo.encodePrettily());
+			int c = brushInfo.getInteger("color");
+			JsonObject reply = new JsonObject();
+			try {
+				pixelArtAPI.changeBrushColor(brushId, c);
+				sendReply(context.response(), reply);
+			} catch (Exception ex) {
+				sendServiceError(context.response());
+			}
+		});
 	}
 
 	protected void selectPixel(RoutingContext context) {
@@ -142,11 +144,10 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		JsonObject reply = new JsonObject();
 		try {
 			pixelArtAPI.selectPixel(brushId);
-			reply.put("result", "ok");
+			sendReply(context.response(), reply);
 		} catch (Exception ex) {
-			reply.put("result", "error");
+			sendServiceError(context.response());
 		}
-		sendReply(context, reply);
 	}
 
 	protected void destroyBrush(RoutingContext context) {
@@ -155,11 +156,10 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		JsonObject reply = new JsonObject();
 		try {
 			pixelArtAPI.destroyBrush(brushId);
-			reply.put("result", "ok");
+			sendReply(context.response(), reply);
 		} catch (Exception ex) {
-			reply.put("result", "error");
+			sendServiceError(context.response());
 		}
-		sendReply(context, reply);
 	}
 
 	protected void getPixelGridState(RoutingContext context) {
@@ -167,12 +167,11 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		JsonObject reply = new JsonObject();
 		try {
 			JsonObject info = pixelArtAPI.getPixelGridState();
-			reply.put("result", "ok");
 			reply.put("pixelGrid", info);
+			sendReply(context.response(), reply);
 		} catch (Exception ex) {
-			reply.put("result", "error");
+			sendServiceError(context.response());
 		}
-		sendReply(context, reply);
 	}
 
 	@Override
@@ -210,9 +209,21 @@ public class PixelArtService extends AbstractVerticle implements PixelGridEventO
 		});
 	}
 
-	private void sendReply(RoutingContext request, JsonObject reply) {
-		HttpServerResponse response = request.response();
+	private void sendReply(HttpServerResponse response, JsonObject reply) {
 		response.putHeader("content-type", "application/json");
 		response.end(reply.toString());
 	}
+	
+	private void sendBadRequest(HttpServerResponse response, JsonObject reply) {
+		response.setStatusCode(400);
+		response.putHeader("content-type", "application/json");
+		response.end(reply.toString());
+	}
+
+	private void sendServiceError(HttpServerResponse response) {
+		response.setStatusCode(500);
+		response.putHeader("content-type", "application/json");
+		response.end();
+	}
+
 }

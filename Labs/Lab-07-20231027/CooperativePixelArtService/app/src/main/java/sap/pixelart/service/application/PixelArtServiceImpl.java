@@ -1,10 +1,16 @@
 package sap.pixelart.service.application;
 
-import java.util.Collection;
-
 import io.vertx.core.json.*;
 import sap.pixelart.service.domain.*;
 
+/**
+ * Application layer implemetation
+ * 
+ * - using the domain layer
+ * 
+ * @author aricci
+ *
+ */
 public class PixelArtServiceImpl implements PixelArtAPI {
 
 	private BrushManager brushManager;

@@ -6,22 +6,33 @@ import io.vertx.core.Vertx;
 import sap.pixelart.service.application.*;
 import sap.pixelart.service.domain.PixelGridEventObserver;
 
-public class WebBasedUIAdapter implements PixelGridEventObserver {
+/**
+ * 
+ * Adapter implementing a REST API  
+ * 
+ * - interacting with the application layer through the PixelArtAPI interface 
+ * 
+ * @author aricci
+ *
+ */
+public class RestPixelArtService implements PixelGridEventObserver {
     static Logger logger = Logger.getLogger("[WebUIAdapter]");	
 	private int port;
-	private PixelArtService service;
+	private RestPixelArtServiceVerticle service;
 	
-	public WebBasedUIAdapter(int port) {	
+	public RestPixelArtService(int port) {	
 		this.port = port;
 	}
 		
-	public void init(PixelArtAPI pixelGridAPI) {
+	public void init(PixelArtAPI pixelArtAPI) {
     	Vertx vertx = Vertx.vertx();
-		this.service = new PixelArtService(port, pixelGridAPI);
+		this.service = new RestPixelArtServiceVerticle(port, pixelArtAPI);
 		vertx.deployVerticle(service);	
-		pixelGridAPI.subscribePixelGridEvents(this);
+		pixelArtAPI.subscribePixelGridEvents(this);
 	}
 
+	/* called by the application layer */
+	
 	@Override
 	public void pixelColorChanged(int x, int y, int color) {
 		logger.log(Level.INFO, "New PixelGrid event - pixel selected " + x + " " + y + " " + color);

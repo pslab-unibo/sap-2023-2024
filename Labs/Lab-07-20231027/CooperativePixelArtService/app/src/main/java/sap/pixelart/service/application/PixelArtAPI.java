@@ -4,6 +4,15 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import sap.pixelart.service.domain.PixelGridEventObserver;
 
+/**
+ * This is the API provided by the Application level
+ * 
+ * - not depending by any infrastructure technology
+ *   (but Vert.x library for JSON -- any library could be good)
+ *   
+ * @author aricci
+ *
+ */
 public interface PixelArtAPI  {
 	/**
 	 * Create a new brush

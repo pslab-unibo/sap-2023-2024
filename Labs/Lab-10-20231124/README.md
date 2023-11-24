@@ -4,7 +4,7 @@
 
 As a follow-up of lectures about [Event-Driven Architecture Style](https://docs.google.com/document/d/1Szif1ksYavi1-AOAm5LRF2pOO-J67udhoGohd_OHwPY/edit?usp=sharing) and Event-Driven Microservices (module-2.8), in this lab we have a look at some technologies useful for concretely design and implement event-driven architectures and event-driven microservices:
 
-- An event broker/event store middleware:  [Apache Kafka](https://docs.google.com/document/d/15QAUpPf8OGb05geq6qKojvrY7zg0OP8B5IMqgEZ4nlI/edit?usp=sharing) 
+- An event broker/event store middleware:  [Apache Kafka](https://kafka.apache.org/) 
     - An open-source distributed event streaming platform  
     - [Background and Context](https://developer.confluent.io/faq/apache-kafka/architecture-and-terminology/)
     - [Main Kafka concepts](https://kafka.apache.org/intro)

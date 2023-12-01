@@ -2,7 +2,7 @@
 
 ## Lab #10-20231124 - [Repo](https://github.com/pslab-unibo/sap-2023-2024.git) 
 
-As a follow-up of lectures about [Event-Driven Architecture Style](https://docs.google.com/document/d/1Szif1ksYavi1-AOAm5LRF2pOO-J67udhoGohd_OHwPY/edit?usp=sharing) and Event-Driven Microservices (module-2.8), in this lab we have a look at some technologies useful for concretely design and implement event-driven architectures and event-driven microservices:
+As a follow-up of the lecture about [Event-Driven Architecture Style](https://docs.google.com/document/d/1Szif1ksYavi1-AOAm5LRF2pOO-J67udhoGohd_OHwPY/edit?usp=sharing) and Event-Driven Microservices (module-2.8), in this lab we have a look at some technologies useful for concretely design and implement event-driven architectures and event-driven microservices:
 
 - An event broker/event store middleware:  [Apache Kafka](https://kafka.apache.org/) 
     - An open-source distributed event streaming platform  

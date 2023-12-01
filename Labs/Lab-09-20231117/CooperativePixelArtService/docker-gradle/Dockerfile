@@ -7,7 +7,7 @@ RUN gradle assemble --no-daemon
 # 2nd Docker build stage: copy builder output and configure entry point
 FROM openjdk:17
 ENV APP_DIR /application
-ENV APP_FILE cooperative-pixel-art-service-jar.jar
+ENV APP_FILE cooperative-pixelart-service-jar.jar
 
 EXPOSE 9000
 

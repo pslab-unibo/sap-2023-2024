@@ -7,6 +7,13 @@ In module 2.4 we saw an overview of microservices patterns. In this lab, we see 
 - [Circuit Breaker](https://docs.google.com/document/d/1TPXAjO5mrZ2UPsN4iWQvs-67DUW4ni_p-4S2uCQztmg/edit?usp=sharing)
 - [Service Discovery](https://docs.google.com/document/d/1fC5bEun1JTHwRCpqFiUj7_eXYG9j1Hxn8pmFiB5RJR4/edit?usp=sharing)
 
+Activity
+- Discussion
+    - Developing microservices that interact with other microservices -- service composition
+
+- [**Assignment #05**](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment-5-20231103.md)
+
+
 Tools of the day
 - [Spring Framework](https://spring.io)
     - [Spring Boot](https://spring.io/microservices) for implementing microservices
@@ -17,13 +24,6 @@ Tools of the day
         -  ready-to-use implementation of different microservices patterns 
     - Documentation
         - [Guides](https://spring.io/guides) 
-
-Activity
-
-- Discussion
-    - Developing microservices that interact with other microservices -- service composition
-
-- [**Assignment #05**](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment-5-20231103.md)
 
 
 

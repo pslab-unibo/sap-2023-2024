@@ -4,7 +4,7 @@
 
 In the previous lab [20231013](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Labs/Lab-04-20231013/README.md) we focused on the layered architecture. In this lab:
 
-- Focus on [Hexagonal Architecture](https://docs.google.com/document/d/1PomKasGfZQuLNWwfVzK-DS-SLcZk_oKniPfgVKsSd8U/edit?usp=sharing)
+- Focus on [Ports & Adapters / Hexagonal Architecture](https://docs.google.com/document/d/1PomKasGfZQuLNWwfVzK-DS-SLcZk_oKniPfgVKsSd8U/edit?usp=sharing)
 
 Activity 
 

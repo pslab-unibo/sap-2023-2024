@@ -20,7 +20,7 @@ public class EScooterManagementSystem {
     	ServiceLayer serviceLayer = new ServiceLayerImpl();
     	PresentationLayer presentationLayer = new PresentationLayerImpl(8081);
     	
-    	dataSourceLayer.init(Optional.of(domainLayer));
+    	dataSourceLayer.init(Optional.empty());
     	domainLayer.init(Optional.of(dataSourceLayer));
     	serviceLayer.init(Optional.of(domainLayer));
     	presentationLayer.init(Optional.of(serviceLayer));

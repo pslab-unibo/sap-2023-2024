@@ -24,7 +24,7 @@ public class TestZipkin {
 		var tracer = tracing.tracer();
 		
 		// Start a new trace or a span within an existing trace representing an operation
-		var span = tracer.startScopedSpan("encode");
+		var span = tracer.startScopedSpan("my-span-name");
 		
 		try {
 			Thread.sleep(1000);

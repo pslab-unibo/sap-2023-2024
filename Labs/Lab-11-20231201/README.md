@@ -13,7 +13,7 @@ In this lab we see and discuss in practice some patterns and technologies involv
 - Distributed Logging 
     - Instrumenting microservices with a logging adapter
     - Aggregating logs along a logging aggregation pipeline in to a Logging server/service
-    - [ELK stack](https://www.elastic.co/elastic-stack), [quick info](https://aws.amazon.com/it/what-is/elk-stack/), (Logstash in particular)[https://www.elastic.co/logstash]
+    - [ELK stack](https://www.elastic.co/elastic-stack), [quick info](https://aws.amazon.com/it/what-is/elk-stack/), [(Logstash in particular)](https://www.elastic.co/logstash)
 
 - Application metrics
     - Instrumenting microservices with a metrics exporter 

@@ -1,0 +1,14 @@
+/*
+ * Smart room 
+ * 
+ * step 1 
+ * - thermostat agent achieves temperature
+ *  
+ */
+mas smart_room_step1 {
+
+   	agent thermostat : thermostat_agent.asl 
+ 
+}
+
+

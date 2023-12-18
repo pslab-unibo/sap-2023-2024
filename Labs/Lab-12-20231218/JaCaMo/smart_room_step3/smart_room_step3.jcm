@@ -1,0 +1,14 @@
+/*
+ * Smart room 
+ * 
+ * step 3 
+ * - thermostat agent achieves and keeps temperature
+ * - user panel to change target temperature
+ *  
+ */
+mas smart_room_step3 {
+
+   	agent thermostat : thermostat_agent.asl 
+    
+}
+

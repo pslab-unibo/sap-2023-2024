@@ -1,0 +1,17 @@
+/*
+ * Smart room 
+ * 
+ * step 4 
+ * - thermostat agent achieves and keeps temperature
+ * - user panel to change target temperature
+ * - interact with room digital twin
+ * 
+ */
+mas smart_room_step4 {
+
+   	agent thermostat : thermostat_agent.asl 
+    
+    class-path:  lib
+     
+}
+

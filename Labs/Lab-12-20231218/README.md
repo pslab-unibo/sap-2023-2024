@@ -6,8 +6,12 @@ Lab companion for the seminar about  about architectures for reactive and autono
 
 The lab is based on the following report: [Software Architecture & Pervasive Software Systems](https://docs.google.com/document/d/1rwmzKeZkY9fWPcoCBZJv89SYrUQ6RyZewH_x3MFPzPo/edit?usp=sharing)
 
+Activity 
+
+- [**Assignment #08**](https://github.com/pslab-unibo/sap-2023-2024/blob/master/Assignments/Assignment-8-20231218.md)
 
 Tools of the day
+
 - [Jason](https://jason-lang.github.io/)
 - [JaCaMo](https://jacamo-lang.github.io/)
 
